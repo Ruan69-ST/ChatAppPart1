@@ -31,4 +31,9 @@ public boolean checkPasswordComplexity() {
     String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
     return java.util.regex.Pattern.matches(regex, password);
 }
+//Validates South African format cellphone number with the country code
+public boolean checkCellPhoneNumber() {
+    String regex = "^\\+27[0-9]{9}$";
+    return java.util.regex.Pattern.matches(regex, cellPhone);
+}
 }
