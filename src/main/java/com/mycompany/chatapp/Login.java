@@ -23,4 +23,7 @@ public Login(String firstName, String lastName, String username, String password
     this.password = password;
     this.cellPhone = cellPhone;
 }
+public boolean checkUserName() {
+    return username.contains("_") && username.length() <=5;
+}
 }
