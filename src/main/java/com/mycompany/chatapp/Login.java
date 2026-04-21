@@ -30,6 +30,7 @@ public class Login {
     }
 
 // Validates password with regex: must be more than 8 characters, include a capital letter, number, and a special character.
+// Validation based on Java Patter documentation and regex lookahead concepts
     public boolean checkPasswordComplexity() {
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
         return java.util.regex.Pattern.matches(regex, password);
@@ -51,10 +52,10 @@ public class Login {
         }
 
         if (!checkCellPhoneNumber()) {
-            return "Cell phone number incorrectly formatted or does not contain international code.";
+            return "Cell number is incorrectly formatted or does not contain an international code; please correct the number and try again.";
         }
 
-        return "Username successfully captured.\nPassword successfully captured.\nCell phone number successfully added.";
+        return "Username successfully captured.\nPassword successfully captured.\nCell number successfully captured.";
     }
 
     public boolean loginUser(String enteredUsername, String enteredPassword) {
@@ -63,7 +64,7 @@ public class Login {
 
     public String returnLoginStatus(boolean success) {
         if (success) {
-            return "Welcome " + firstName + ", " + lastName + " it is great to see you again.";
+            return "Welcome " + firstName + " ," + lastName + " it is great to see you.";
         } else {
             return "Username or password incorrect, please try again.";
         }
