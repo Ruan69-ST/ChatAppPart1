@@ -5,6 +5,7 @@
 package com.mycompany.chatapp;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,6 +27,9 @@ public class Message {
 
     // Stores the message number.
     private int messageNumber;
+
+    // Stores all messages that are successfully sent while the program is running.
+    private static ArrayList<String> sentMessages = new ArrayList<>();
 
     /**
      * Constructor used to create new Message object.
@@ -157,5 +161,63 @@ public class Message {
             default:
                 return "Invalid option selected.";
         }
+    }
+
+    /**
+     * Adds the current message details to the sent messages list. This is only
+     * used when the user chooses to send the message.
+     */
+    public void addSentMessage() {
+
+        if (messageID == null) {
+            generateMessageID();
+        }
+
+        if (messageHash == null) {
+            createMessageHash();
+        }
+
+        String messageDetails = "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
+
+        sentMessages.add(messageDetails);
+
+    }
+
+    /**
+     * Returns all messages that were sent while the program is running.
+     *
+     * @return A formatted list of sent messages
+     */
+    public String printMessages() {
+
+        if (sentMessages.isEmpty()) {
+
+            return "No messages sent.";
+
+        }
+
+        String allMessages = "";
+
+        for (String message : sentMessages) {
+
+            allMessages += message + "\n\n";
+
+        }
+
+        return allMessages;
+
+    }
+
+    /**
+     * Returns the total number of messages sent while the program is running.
+     *
+     * @return The number of sent messages.
+     */
+    public int returnTotalMessages() {
+
+        return sentMessages.size();
     }
 }
