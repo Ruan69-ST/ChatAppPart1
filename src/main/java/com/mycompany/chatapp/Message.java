@@ -103,4 +103,36 @@ public class Message {
         return messageID != null && messageID.length() == 10;
 
     }
+
+    /**
+     * Creates the required message hash using the first two digits of the
+     * message ID, the message number, and the first and last words of the
+     * message text.
+     *
+     * @return The generated message hash in uppercase.
+     */
+    public String createMessageHash() {
+
+        if (messageID == null) {
+
+            generateMessageID();
+
+        }
+
+        // Splits the message into separate words.
+        String[] words = messageText.trim().split("\\s+");
+
+        // Stores the first word of the message and removes punctuation.
+        String firstWord = words[0].replaceAll("[^a-zA-Z0-9]", "");
+
+        // Stores the last word of the message and removes punctuation.
+        String lastWord = words[words.length - 1].replaceAll("[^a-zA-Z0-9]", "");
+
+        // Creates the message hash in the required format.
+        messageHash = messageID.substring(0, 2)
+                + ":" + messageNumber
+                + ":" + firstWord + lastWord;
+
+        return messageHash.toUpperCase();
+    }
 }
