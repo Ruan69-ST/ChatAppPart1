@@ -92,4 +92,15 @@ public class Message {
 
         return messageID;
     }
+
+    /**
+     * Checks whether the generated message ID contains 10 digits.
+     *
+     * @return True if the message ID is valid, otherwise false.
+     */
+    public boolean checkMessageID() {
+
+        return messageID != null && messageID.length() == 10;
+
+    }
 }
