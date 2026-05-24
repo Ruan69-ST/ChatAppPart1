@@ -176,20 +176,7 @@ public class Message {
      */
     public void addSentMessage() {
 
-        if (messageID == null) {
-            generateMessageID();
-        }
-
-        if (messageHash == null) {
-            createMessageHash();
-        }
-
-        String messageDetails = "Message ID: " + messageID
-                + "\nMessage Hash: " + messageHash
-                + "\nRecipient: " + recipient
-                + "\nMessage: " + messageText;
-
-        sentMessages.add(messageDetails);
+        sentMessages.add(getMessageDetails());
 
     }
 
@@ -226,5 +213,81 @@ public class Message {
     public int returnTotalMessages() {
 
         return sentMessages.size();
+    }
+
+    /**
+     * Returns the message ID.
+     *
+     * @return The message ID.
+     */
+    public String getMessageID() {
+
+        return messageID;
+
+    }
+
+    /**
+     * Returns the message hash.
+     *
+     * @return The message hash.
+     */
+    public String getMessageHash() {
+
+        return messageHash;
+
+    }
+
+    /**
+     * Returns the recipient cellphone number.
+     *
+     * @return The recipient cellphone number.
+     */
+    public String getRecipient() {
+
+        return recipient;
+
+    }
+
+    /**
+     * Returns the message text.
+     *
+     * @return The message text.
+     */
+    public String getMessageText() {
+
+        return messageText;
+
+    }
+
+    /**
+     * Allows the message ID to be set manually for testing.
+     *
+     * @param messageID The message ID to use.
+     */
+    public void setMessageID(String messageID) {
+
+        this.messageID = messageID;
+
+    }
+
+    /**
+     * Returns the full message details in the required display order.
+     *
+     * @return Message ID, message hash, recipient, and message text.
+     */
+    public String getMessageDetails() {
+
+        if (messageID == null) {
+            generateMessageID();
+        }
+
+        if (messageHash == null) {
+            createMessageHash();
+        }
+
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
     }
 }
