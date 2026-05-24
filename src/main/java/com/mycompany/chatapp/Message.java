@@ -49,11 +49,18 @@ public class Message {
      * Validates the recipient cellphone number. The number must start with +27
      * and contain 12 characters.
      *
-     * @return True if the number is valid, otherwise false.
+     * @return Validation message for the recipient cellphone number.
      */
-    public boolean checkRecipientCell() {
+    public String checkRecipientCell() {
 
-        return recipient.matches("^\\+27\\d{9}$");
+        if (recipient.matches("^\\+27\\d{9}$")) {
+
+            return "Cell phone number successfully captured.";
+
+        } else {
+
+            return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+        }
 
     }
 
@@ -72,7 +79,7 @@ public class Message {
             int excessCharacters = messageText.length() - 250;
 
             return "Message exceeds 250 characters by "
-                    + excessCharacters + ", please reduce size.";
+                    + excessCharacters + "; please reduce the size.";
         }
     }
 
