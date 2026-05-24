@@ -135,4 +135,27 @@ public class Message {
 
         return messageHash.toUpperCase();
     }
+
+    /**
+     * Returns the correct message action based on the user's choice.
+     *
+     * @param choice The option selected by the user.
+     * @return The result of the selected message action.
+     */
+    public String sentMessage(int choice) {
+
+        switch (choice) {
+            case 1:
+                return "Message successfully sent.";
+
+            case 2:
+                return "Press 0 to delete the message.";
+
+            case 3:
+                return "Message successfully stored.";
+
+            default:
+                return "Invalid option selected.";
+        }
+    }
 }
