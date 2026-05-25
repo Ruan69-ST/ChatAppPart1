@@ -6,6 +6,8 @@ package com.mycompany.chatapp;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -30,6 +32,9 @@ public class Message {
 
     // Stores all messages that are successfully sent while the program is running.
     private static ArrayList<String> sentMessages = new ArrayList<>();
+
+    // Stores all messages that are saved to the JSON file while the program is running.
+    private static ArrayList<Message> storedMessages = new ArrayList<>();
 
     /**
      * Constructor used to create new Message object.
@@ -163,7 +168,7 @@ public class Message {
                 return "Press 0 to delete the message.";
 
             case 3:
-                return "Message successfully stored.";
+                return storeMessage();
 
             default:
                 return "Invalid option selected.";
@@ -213,6 +218,72 @@ public class Message {
     public int returnTotalMessages() {
 
         return sentMessages.size();
+    }
+
+    /**
+     * Stores the current message in JSON file. The JSON file is rewritten each
+     * time so that it remains a valid JSON.
+     *
+     * Code attribution: FileWriter and IOException were used based on the
+     * official Oracle Java documentation for writing text to files and handling
+     * file errors.
+     *
+     * @return Message confirming if the message was stored successfully.
+     */
+    public String storeMessage() {
+
+        if (messageID == null) {
+            generateMessageID();
+        }
+
+        if (messageHash == null) {
+            createMessageHash();
+        }
+
+        storedMessages.add(this);
+
+        try (FileWriter writer = new FileWriter("stored_messages.json")) {
+
+            writer.write("[\n");
+
+            for (int i = 0; i < storedMessages.size(); i++) {
+
+                Message storedMessage = storedMessages.get(i);
+
+                writer.write("  {\n");
+                writer.write("    \"messageID\": \"" + escapeJson(storedMessage.getMessageID()) + "\",\n");
+                writer.write("    \"messageHash\": \"" + escapeJson(storedMessage.getMessageHash()) + "\",\n");
+                writer.write("    \"recipient\": \"" + escapeJson(storedMessage.getRecipient()) + "\",\n");
+                writer.write("    \"message\": \"" + escapeJson(storedMessage.getMessageText()) + "\"\n");
+                writer.write("  }");
+
+                if (i < storedMessages.size() - 1) {
+                    writer.write(",");
+                }
+
+                writer.write("\n");
+            }
+
+            writer.write("]\n");
+
+            return "Message successfully stored.";
+
+        } catch (IOException e) {
+
+            return "Error storing message.";
+        }
+    }
+
+    /**
+     * Escapes special characters so that message text can be safely written to
+     * JSON.
+     *
+     * @param value The text value that must be written to JSON.
+     * @return The escaped JSON text.
+     */
+    private String escapeJson(String value) {
+
+        return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     /**
