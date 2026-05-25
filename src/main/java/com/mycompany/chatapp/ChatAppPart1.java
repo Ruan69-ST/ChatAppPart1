@@ -53,6 +53,7 @@ public class ChatAppPart1 {
             input.nextLine();
 
             int menuChoice = 0;
+            int messagesEntered = 0;
 
             while (menuChoice != 3) {
 
@@ -68,8 +69,55 @@ public class ChatAppPart1 {
                 switch (menuChoice) {
 
                     case 1:
-                        System.out.println("Send Messages selected.");
-                        System.out.println("You may enter up to " + totalMessages + " messages.");
+
+                        if (messagesEntered >= totalMessages) {
+                            System.out.println("You have already entered the maximum number of messages.");
+                            break;
+                        }
+
+                        while (messagesEntered < totalMessages) {
+
+                            System.out.println("\nMessage " + (messagesEntered + 1) + " of " + totalMessages);
+
+                            System.out.print("Enter recipient cell phone number: ");
+                            String recipient = input.nextLine();
+
+                            System.out.print("Enter message: ");
+                            String messageText = input.nextLine();
+
+                            Message message = new Message(recipient, messageText, messagesEntered);
+
+                            message.generateMessageID();
+                            message.createMessageHash();
+
+                            System.out.println(message.checkRecipientCell());
+                            System.out.println(message.checkMessageLength());
+
+                            System.out.println("\nChoose what you want to do with this message:");
+                            System.out.println("1) Send Message");
+                            System.out.println("2) Disregard Message");
+                            System.out.println("3) Store Message to send later");
+                            System.out.print("Enter your choice: ");
+
+                            int messageChoice = input.nextInt();
+                            input.nextLine();
+
+                            System.out.println(message.sentMessage(messageChoice));
+
+                            if (messageChoice == 1) {
+
+                                message.addSentMessage();
+
+                                System.out.println("\nMessage Details:");
+                                System.out.println(message.getMessageDetails());
+                            }
+
+                            messagesEntered++;
+                        }
+
+                        Message messageReport = new Message("", "", 0);
+                        System.out.println("\nTotal messages sent: " + messageReport.returnTotalMessages());
+
                         break;
 
                     case 2:
