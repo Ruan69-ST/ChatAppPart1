@@ -35,6 +35,16 @@ public class Message {
 
     // Stores all messages that are saved to the JSON file while the program is running.
     private static ArrayList<Message> storedMessages = new ArrayList<>();
+    
+    // Part 3: New dynamic tracking arrays
+    // Tracks all messages that were flagged as "disregarded"
+    private static ArrayList<String> disregardedMessagesArray = new ArrayList<>();
+    
+    // Parrallel arrays for part 3 searching & features
+    private static ArrayList<String> messageIDArray = new ArrayList<>();
+    private static ArrayList<String> messageHashArray = new ArrayList<>();
+    private static ArrayList<String> recipientArray = new ArrayList<>();
+    private static ArrayList<String> storedMessagesTextArray = new ArrayList<>();
 
     /**
      * Constructor used to create new Message object.
