@@ -35,11 +35,11 @@ public class Message {
 
     // Stores all messages that are saved to the JSON file while the program is running.
     private static ArrayList<Message> storedMessages = new ArrayList<>();
-    
+
     // Part 3: New dynamic tracking arrays
     // Tracks all messages that were flagged as "disregarded"
     private static ArrayList<String> disregardedMessagesArray = new ArrayList<>();
-    
+
     // Parrallel arrays for part 3 searching & features
     private static ArrayList<String> messageIDArray = new ArrayList<>();
     private static ArrayList<String> messageHashArray = new ArrayList<>();
@@ -175,6 +175,17 @@ public class Message {
                 return "Message successfully sent.";
 
             case 2:
+                //Ensure ID and hash are generated before tracking the disregarded message
+                if (messageID == null) {
+                    generateMessageID();
+                }
+                if (messageHash == null) {
+                    createMessageHash();
+                }
+
+                //Track this message as disregarded
+                disregardedMessagesArray.add(getMessageDetails());
+
                 return "Press 0 to delete the message.";
 
             case 3:
@@ -251,7 +262,7 @@ public class Message {
         }
 
         storedMessages.add(this);
-        
+
         // Populate parallel arrays for part 3 tracking
         messageIDArray.add(this.messageID);
         messageHashArray.add(this.messageHash);
