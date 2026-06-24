@@ -251,6 +251,12 @@ public class Message {
         }
 
         storedMessages.add(this);
+        
+        // Populate parallel arrays for part 3 tracking
+        messageIDArray.add(this.messageID);
+        messageHashArray.add(this.messageHash);
+        recipientArray.add(this.recipient);
+        storedMessagesTextArray.add(this.messageText);
 
         try (FileWriter writer = new FileWriter("stored_messages.json")) {
 
