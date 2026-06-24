@@ -388,4 +388,44 @@ public class Message {
                 + "\nRecipient: " + recipient
                 + "\nMessage: " + messageText;
     }
+
+    // Part 3 search and reporting methods
+    /**
+     * Searches the parallel arrays for stored message using its ID or Hash.
+     *
+     *  * @param searchKey The message ID or message hash to look for.
+     * @return The formatted details of the message if found, otherwise a not
+     * found error.
+     */
+    public static String searchStoredMessages(String searchKey) {
+        for (int i = 0; i < messageIDArray.size(); i++) {
+            // Check if the search key matches either the ID or the Hash at the current index
+            if (messageIDArray.get(i).equalsIgnoreCase(searchKey) || messageHashArray.get(i).equalsIgnoreCase(searchKey)) {
+
+                return "--- MESSAGE RETRIEVED (INDEX " + i + ") ---\n"
+                        + "Message ID: " + messageIDArray.get(i) + "\n"
+                        + "Message Hash: " + messageHashArray.get(i) + "\n"
+                        + "Recipient: " + recipientArray.get(i) + "\n"
+                        + "Message: " + storedMessagesTextArray.get(i);
+            }
+        }
+        return "Search complete. Message with ID/Hash '" + searchKey + "' could not be found.";
+    }
+
+    /**
+     * Compiles and returns a report of all messages flagged as disregarded.
+     *
+     * * @return A formatted list of disregarded messages.
+     */
+    public static String printDisregardedMessages() {
+        if (disregardedMessagesArray.isEmpty()) {
+            return "No messages have been disregarded during this session.";
+        }
+
+        String report = "--- DISREGARDED MESSAGES REPORT ---\n\n";
+        for (String messageDetails : disregardedMessagesArray) {
+            report += messageDetails + "\n-----------------------------------\n";
+        }
+        return report;
+    }
 }
