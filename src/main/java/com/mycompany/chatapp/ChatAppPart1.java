@@ -55,12 +55,14 @@ public class ChatAppPart1 {
             int menuChoice = 0;
             int messagesEntered = 0;
 
-            while (menuChoice != 3) {
+            while (menuChoice != 5) {
 
                 System.out.println("\nPlease select an option:");
                 System.out.println("1) Send Messages");
                 System.out.println("2) Show recently sent messages");
-                System.out.println("3) Quit");
+                System.out.println("3) Search stored messages");
+                System.out.println("4) Show disregarded messages report");
+                System.out.println("5) Quit");
                 System.out.print("Enter your choice: ");
 
                 menuChoice = input.nextInt();
@@ -110,6 +112,9 @@ public class ChatAppPart1 {
 
                                 System.out.println("\nMessage Details:");
                                 System.out.println(message.getMessageDetails());
+                            } else if (messageChoice == 3) {
+                                System.out.println("\nStored Message Details:");
+                                System.out.println(message.getMessageDetails());
                             }
 
                             messagesEntered++;
@@ -121,10 +126,23 @@ public class ChatAppPart1 {
                         break;
 
                     case 2:
-                        System.out.println("Coming Soon.");
+                        Message recentReport = new Message("", "", 0);
+                        System.out.println("\n--- RECENTLY SENT MESSAGES ---");
+                        System.out.println(recentReport.printMessages());
                         break;
 
                     case 3:
+                        System.out.print("\nEnter Message ID or Message Hash to search: ");
+                        String searchKey = input.nextLine();
+                        System.out.println(Message.searchStoredMessages(searchKey));
+                        break;
+
+                    case 4:
+                        System.out.println();
+                        System.out.println(Message.printDisregardedMessages());
+                        break;
+
+                    case 5:
                         System.out.println("Goodbye.");
                         break;
 
