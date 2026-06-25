@@ -55,14 +55,15 @@ public class ChatAppPart1 {
             int menuChoice = 0;
             int messagesEntered = 0;
 
-            while (menuChoice != 5) {
+            while (menuChoice != 6) {
 
                 System.out.println("\nPlease select an option:");
                 System.out.println("1) Send Messages");
                 System.out.println("2) Show recently sent messages");
                 System.out.println("3) Search stored messages");
-                System.out.println("4) Show disregarded messages report");
-                System.out.println("5) Quit");
+                System.out.println("4) Stored Messages");
+                System.out.println("5) Show disregarded messages report");
+                System.out.println("6) Quit");
                 System.out.print("Enter your choice: ");
 
                 menuChoice = input.nextInt();
@@ -138,11 +139,44 @@ public class ChatAppPart1 {
                         break;
 
                     case 4:
-                        System.out.println();
-                        System.out.println(Message.printDisregardedMessages());
+                        System.out.println("\n--- STORED MESSAGES MENU ---");
+                        System.out.println("1. Display senders and recipients");
+                        System.out.println("2. Display longest stored message");
+                        System.out.println("3. Search by Recipient");
+                        System.out.println("4. Delete message by Hash");
+                        System.out.println("5. Display full system report");
+                        System.out.print("Enter choice: ");
+                        int sub = input.nextInt();
+                        input.nextLine();
+
+                        switch (sub) {
+                            case 1:
+                                System.out.println(Message.displaySendersAndRecipients(username));
+                                break;
+                            case 2:
+                                System.out.println(Message.getLongestStoredMessage());
+                                break;
+                            case 3:
+                                System.out.print("Enter recipient number: ");
+                                System.out.println(Message.searchByRecipient(input.nextLine()));
+                                break;
+                            case 4:
+                                System.out.print("Enter hash to delete: ");
+                                System.out.println(Message.deleteMessageByHash(input.nextLine()));
+                                break;
+                            case 5:
+                                System.out.println(Message.displayFullReport(username));
+                                break;
+                            default:
+                                System.out.println("Invalid.");
+                        }
                         break;
 
                     case 5:
+                        System.out.println(Message.printDisregardedMessages());
+                        break;
+
+                    case 6:
                         System.out.println("Goodbye.");
                         break;
 

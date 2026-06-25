@@ -308,8 +308,7 @@ public class Message {
      * @param value The text value that must be written to JSON.
      * @return The escaped JSON text.
      */
-    private String escapeJson(String value) {
-
+    private static String escapeJson(String value) {
         return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
@@ -427,5 +426,111 @@ public class Message {
             report += messageDetails + "\n-----------------------------------\n";
         }
         return report;
+    }
+
+    /**
+     * Requirement (a): Displays the sender and recipient of all stored
+     * messages.
+     */
+    public static String displaySendersAndRecipients(String currentUserName) {
+        if (recipientArray.isEmpty()) {
+            return "No stored messages found.";
+        }
+
+        StringBuilder output = new StringBuilder("--- STORED CONTACTS ---\n");
+        for (int i = 0; i < recipientArray.size(); i++) {
+            output.append("From: ").append(currentUserName)
+                    .append(" -> To: ").append(recipientArray.get(i)).append("\n");
+        }
+        return output.toString();
+    }
+
+    /**
+     * Requirement (b): Locates and returns the longest stored message text.
+     */
+    public static String getLongestStoredMessage() {
+        if (storedMessagesTextArray.isEmpty()) {
+            return "No messages stored.";
+        }
+
+        int longestIndex = 0;
+        for (int i = 1; i < storedMessagesTextArray.size(); i++) {
+            if (storedMessagesTextArray.get(i).length() > storedMessagesTextArray.get(longestIndex).length()) {
+                longestIndex = i;
+            }
+        }
+        return storedMessagesTextArray.get(longestIndex);
+    }
+
+    /**
+     * Requirement (d): Gathers all messages bound for a specific recipient.
+     */
+    public static String searchByRecipient(String recipientNum) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < recipientArray.size(); i++) {
+            if (recipientArray.get(i).equals(recipientNum)) {
+                output.append(storedMessagesTextArray.get(i)).append(" ");
+            }
+        }
+        return output.toString().trim();
+    }
+
+    /**
+     * Requirement (e): Delete message using message hash.
+     */
+    public static String deleteMessageByHash(String hash) {
+        for (int i = 0; i < messageHashArray.size(); i++) {
+            if (messageHashArray.get(i).equalsIgnoreCase(hash)) {
+                String deletedText = storedMessagesTextArray.get(i);
+                messageIDArray.remove(i);
+                messageHashArray.remove(i);
+                recipientArray.remove(i);
+                storedMessagesTextArray.remove(i);
+                storedMessages.remove(i);
+
+                saveToJSON();
+
+                return "Message: \"" + deletedText + "\" successfully deleted.";
+            }
+        }
+        return "Message hash not found.";
+    }
+
+    /**
+     * Requirement (f): Displays a full system report.
+     *
+     * * @param currentUserName The name of the user currently logged in.
+     * @return A formatted report of all stored messages.
+     */
+    public static String displayFullReport(String currentUserName) {
+        if (messageIDArray.isEmpty()) {
+            return "No messages stored in the system.";
+        }
+
+        StringBuilder output = new StringBuilder("--- FULL STORAGE REPORT ---\n");
+        for (int i = 0; i < messageIDArray.size(); i++) {
+            output.append("Hash: ").append(messageHashArray.get(i))
+                    .append(" | Recipient: ").append(recipientArray.get(i))
+                    .append("\nMessage: ").append(storedMessagesTextArray.get(i)).append("\n\n");
+        }
+        return output.toString();
+    }
+
+    private static void saveToJSON() {
+        try (FileWriter writer = new FileWriter("stored_messages.json")) {
+            writer.write("[\n");
+            for (int i = 0; i < storedMessages.size(); i++) {
+                Message m = storedMessages.get(i);
+                writer.write("  {\n");
+                writer.write("    \"messageID\": \"" + escapeJson(m.getMessageID()) + "\",\n");
+                writer.write("    \"messageHash\": \"" + escapeJson(m.getMessageHash()) + "\",\n");
+                writer.write("    \"recipient\": \"" + escapeJson(m.getRecipient()) + "\",\n");
+                writer.write("    \"message\": \"" + escapeJson(m.getMessageText()) + "\"\n");
+                writer.write("  }" + (i < storedMessages.size() - 1 ? "," : "") + "\n");
+            }
+            writer.write("]");
+        } catch (IOException e) {
+            System.out.println("Error saving to JSON.");
+        }
     }
 }
