@@ -1,8 +1,44 @@
 [
   {
-    "messageID": "3167620393",
-    "messageHash": "31:0:Testingarrays",
-    "recipient": "+27723095596",
-    "message": "Testing arrays"
+    "messageID": "7118392574",
+    "messageHash": "71:1:ReportTest",
+    "recipient": "+27838884567",
+    "message": "Report Test"
+  },
+  {
+    "messageID": "0215690437",
+    "messageHash": "02:1:Ittime",
+    "recipient": "+27838884567",
+    "message": "It is dinner time!"
+  },
+  {
+    "messageID": "3096809542",
+    "messageHash": "30:1:Didcake",
+    "recipient": "+27838884567",
+    "message": "Did you get the cake?"
+  },
+  {
+    "messageID": "7973762767",
+    "messageHash": "79:2:Wheretime",
+    "recipient": "+27838884567",
+    "message": "Where are you? You are late! I have asked you to be on time."
+  },
+  {
+    "messageID": "7936516872",
+    "messageHash": "79:0:Hitonight",
+    "recipient": "+27718693002",
+    "message": "Hi Mike, can you join us for dinner tonight?"
+  },
+  {
+    "messageID": "1803128092",
+    "messageHash": "18:1:Didcake",
+    "recipient": "+27838884567",
+    "message": "Did you get the cake?"
+  },
+  {
+    "messageID": "7312283638",
+    "messageHash": "73:2:Okyou",
+    "recipient": "+27838884567",
+    "message": "Ok, I am leaving without you."
   }
 ]

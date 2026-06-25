@@ -61,8 +61,7 @@ public class Message {
     }
 
     /**
-     * Validates the recipient cellphone number. The number must start with +27
-     * and contain 12 characters.
+     * Validates the recipient cellphone number. The number must start with +27 and contain 12 characters.
      *
      * @return Validation message for the recipient cellphone number.
      */
@@ -390,7 +389,8 @@ public class Message {
 
     // Part 3 search and reporting methods
     /**
-     * Searches the parallel arrays for stored message using its ID or Hash.
+     * Requirement (c): Search for a message ID and display the corresponding
+     * recipient and message.
      *
      *  * @param searchKey The message ID or message hash to look for.
      * @return The formatted details of the message if found, otherwise a not

@@ -96,4 +96,92 @@ public class MessageTest {
         assertEquals("Message successfully stored.",
                 validMessage.sentMessage(3));
     }
+
+    @Test
+    public void testLongestStoredMessage() {
+
+        Message m1 = new Message("+27838884567", "Did you get the cake?", 1);
+
+        Message m2 = new Message("+27838884567", "Where are you? You are late! I have asked you to be on time.", 2);
+
+        m1.storeMessage();
+        m2.storeMessage();
+
+        assertEquals("Where are you? You are late! I have asked you to be on time.", Message.getLongestStoredMessage());
+    }
+
+    @Test
+    public void testSearchByRecipient() {
+
+        Message m1 = new Message("+27838884567", "Did you get the cake?", 1);
+
+        Message m2 = new Message("+27838884567", "Ok, I am leaving without you.", 2);
+
+        m1.storeMessage();
+        m2.storeMessage();
+
+        String result = Message.searchByRecipient("+27838884567");
+
+        assertTrue(result.contains("Did you get the cake?"));
+        assertTrue(result.contains("Ok, I am leaving without you."));
+    }
+
+    @Test
+    public void testSearchStoredMessage() {
+
+        Message msg = new Message("+27838884567", "It is dinner time!", 1);
+
+        msg.generateMessageID();
+        msg.createMessageHash();
+
+        String id = msg.getMessageID();
+
+        msg.storeMessage();
+
+        String result = Message.searchStoredMessages(id);
+
+        assertTrue(result.contains("It is dinner time!"));
+    }
+
+    @Test
+    public void testDeleteMessageByHash() {
+
+        Message msg = new Message("+27838884567", "Delete me", 1);
+
+        msg.generateMessageID();
+        msg.createMessageHash();
+
+        String hash = msg.getMessageHash();
+
+        msg.storeMessage();
+
+        String result = Message.deleteMessageByHash(hash);
+
+        assertEquals("Message: \"Delete me\" successfully deleted.", result);
+    }
+
+    @Test
+    public void testDisplayFullReport() {
+
+        Message msg = new Message("+27838884567", "Report Test", 1);
+
+        msg.storeMessage();
+
+        String report = Message.displayFullReport("Ruan");
+
+        assertTrue(report.contains("Recipient"));
+        assertTrue(report.contains("Report Test"));
+    }
+
+    @Test
+    public void testDisregardedMessagesReport() {
+
+        Message msg = new Message("+27838884567", "Ignore me", 1);
+
+        msg.sentMessage(2);
+
+        String report = Message.printDisregardedMessages();
+
+        assertTrue(report.contains("Ignore me"));
+    }
 }
