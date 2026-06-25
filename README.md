@@ -56,3 +56,10 @@ mvn test
 A GitHub Actions workflow has been added in .github/workflows/TestJava.yml.
 
 The workflow runs Maven tests automatically when new code is pushed to GitHub.
+
+#Part 3
+
+- Implemented message tracking arrays.
+- Added functionality to search and delete messages.
+- finalized the logic for saving message history to JSON file.
+- Unit tests using specified data
